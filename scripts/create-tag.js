@@ -1,13 +1,17 @@
 const { execSync } = require("child_process");
 
 try {
-  // Fetch all tags from the remote repository
+  // Fetch all tags from the remote
   execSync("git fetch --tags");
 
-  // Get the latest tag
-  let latestTag = execSync("git describe --tags --abbrev=0 || echo v0.0.0")
+  // Get a list of tags and filter for semantic versions
+  const tags = execSync("git tag")
     .toString()
-    .trim();
+    .split("\n")
+    .filter(tag => /^v\d+\.\d+\.\d+$/.test(tag));
+
+  // Determine the latest tag
+  let latestTag = tags.length > 0 ? tags.sort().pop() : "v0.0.0";
 
   // Split the version number into major, minor, and patch
   let [major, minor, patch] = latestTag.replace("v", "").split(".").map(Number);
@@ -17,13 +21,6 @@ try {
 
   // Generate the new tag
   const newTag = `v${major}.${minor}.${patch}`;
-
-  // Check if the new tag already exists
-  const existingTags = execSync("git tag").toString().split("\n");
-  if (existingTags.includes(newTag)) {
-    console.error(`Tag ${newTag} already exists. Aborting.`);
-    process.exit(1);
-  }
 
   // Create and push the new tag
   console.log(`Creating new tag: ${newTag}`);
