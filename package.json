@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "mkdir -p dist && cp -r * dist/ && echo 'Files copied to dist directory'"
+    "build": "mkdir -p dist && cp -r src/* dist/ && echo 'Files copied from src/ to dist/'"
 
   },
   "repository": {
