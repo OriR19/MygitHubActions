@@ -1,13 +1,8 @@
 name: ci/cd
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+  schedule:
+    - cron: "0 14 * * *" 
 
 permissions:
   contents: write
@@ -72,7 +67,7 @@ jobs:
       - name: Archive dist/ folder
         run: npm run archive
 
-      - name: Create a tag
+      - name: new v
         run: npm run create-tag
 
       - name: Create GitHub Release
