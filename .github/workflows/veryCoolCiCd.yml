@@ -75,6 +75,9 @@ jobs:
       - name: print enviroment variable
         run: echo ${{ vars.MY_COOL_VARIABLE }}
 
+      - name : print secret
+        run: echo ${{ secrets.MY_SECRET_SECRET }} 
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
