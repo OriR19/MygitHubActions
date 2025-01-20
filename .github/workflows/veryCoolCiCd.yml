@@ -72,7 +72,7 @@ jobs:
         run: npm run create-tag
         
       - name: print ref
-        run: echo ${{ github.ref_name }}
+        run: echo ${{ github.ref }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
